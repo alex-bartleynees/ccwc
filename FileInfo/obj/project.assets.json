@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Application.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Application/1.0.0": {
+      "type": "project",
+      "path": "../Application/Application.csproj",
+      "msbuildProject": "../Application/Application.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "Application >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "/Users/alexanderbartleynees/.nuget/packages/": {}
@@ -31,7 +50,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/alexanderbartleynees/Documents/Documents - Alexander’s MacBook Air/web-development/ccwc/Application/Application.csproj": {
+              "projectPath": "/Users/alexanderbartleynees/Documents/Documents - Alexander’s MacBook Air/web-development/ccwc/Application/Application.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

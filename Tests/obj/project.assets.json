@@ -1808,6 +1808,29 @@
         "build": {
           "build/netcoreapp3.1/xunit.runner.visualstudio.props": {}
         }
+      },
+      "Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Application.dll": {}
+        }
+      },
+      "FileInfo/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Application": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/FileInfo.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FileInfo.dll": {}
+        }
       }
     }
   },
@@ -6103,10 +6126,22 @@
         "xunit.runner.visualstudio.2.4.5.nupkg.sha512",
         "xunit.runner.visualstudio.nuspec"
       ]
+    },
+    "Application/1.0.0": {
+      "type": "project",
+      "path": "../Application/Application.csproj",
+      "msbuildProject": "../Application/Application.csproj"
+    },
+    "FileInfo/1.0.0": {
+      "type": "project",
+      "path": "../FileInfo/FileInfo.csproj",
+      "msbuildProject": "../FileInfo/FileInfo.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "Application >= 1.0.0",
+      "FileInfo >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 17.3.2",
       "coverlet.collector >= 3.1.2",
       "xunit >= 2.4.2",
@@ -6137,7 +6172,14 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/alexanderbartleynees/Documents/Documents - Alexander’s MacBook Air/web-development/ccwc/Application/Application.csproj": {
+              "projectPath": "/Users/alexanderbartleynees/Documents/Documents - Alexander’s MacBook Air/web-development/ccwc/Application/Application.csproj"
+            },
+            "/Users/alexanderbartleynees/Documents/Documents - Alexander’s MacBook Air/web-development/ccwc/FileInfo/FileInfo.csproj": {
+              "projectPath": "/Users/alexanderbartleynees/Documents/Documents - Alexander’s MacBook Air/web-development/ccwc/FileInfo/FileInfo.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
