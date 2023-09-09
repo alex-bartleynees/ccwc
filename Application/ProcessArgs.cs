@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 
 namespace Application;
-public class ProcessArgs
+public partial class ProcessArgs
 {
     private const string HelpArg = "--h";
     private const string CountArg = "--c";
@@ -15,51 +15,47 @@ public class ProcessArgs
         var command = args.Length > 0 ? args[0] : null;
         var filePath = args.Length == 0 ? null : args.Length > 1 ? args[1] : args[0];
 
-        if (!isValidFilePath(filePath))
+        if (!IsValidFilePath(filePath))
         {
-            try
-            {
-                using (StreamReader reader = new(Console.OpenStandardInput()))
-                {
-                    string text = reader.ReadToEnd();
-                    filePath = "temp.txt";
-                    File.WriteAllText(filePath, text);
-                    command = args.Length > 0 ? args[0] : null;
-                    return ProcessCommand(command, filePath);
-                }
-            }
-            catch (Exception e)
-            {
-                return e.Message;
-            }
+            return ProcessStream(command);
         }
 
         return ProcessCommand(command, filePath);
 
     }
 
-    private static Boolean isValidFilePath(string? filePath)
+    private static bool IsValidFilePath(string? filePath)
     {
         return File.Exists(filePath);
     }
 
+    private static string ProcessStream(string? command)
+    {
+        try
+        {
+            using StreamReader reader = new(Console.OpenStandardInput());
+            string text = reader.ReadToEnd();
+            var filePath = "temp.txt";
+            File.WriteAllText(filePath, text);
+            return ProcessCommand(command, filePath);
+        }
+        catch (Exception e)
+        {
+            return e.Message;
+        }
+    }
+
     private static string ProcessCommand(string? command, string? filePath)
     {
-        switch (command)
+        return command switch
         {
-            case HelpArg:
-                return "Usage: FileInfo <path>";
-            case CountArg:
-                return ProcessCountCommand(filePath);
-            case LinesArg:
-                return ProcessLinesCommand(filePath);
-            case WordsArg:
-                return ProcessWordsCommand(filePath);
-            case CharsArg:
-                return ProcessCharsCommand(filePath);
-            default:
-                return ProcessAllCommands(filePath);
-        }
+            HelpArg => "Usage: FileInfo <path>",
+            CountArg => ProcessCountCommand(filePath),
+            LinesArg => ProcessLinesCommand(filePath),
+            WordsArg => ProcessWordsCommand(filePath),
+            CharsArg => ProcessCharsCommand(filePath),
+            _ => ProcessAllCommands(filePath),
+        };
     }
 
     private static string ProcessCountCommand(string? filePath)
@@ -158,8 +154,11 @@ public class ProcessArgs
 
     private static string[] GetWords(string text)
     {
-        string[] words = Regex.Split(text, @"\s+");
+        string[] words = MyRegex().Split(text);
         words = words.Where(word => !string.IsNullOrEmpty(word)).ToArray();
         return words;
     }
+
+    [GeneratedRegex("\\s+")]
+    private static partial Regex MyRegex();
 }
